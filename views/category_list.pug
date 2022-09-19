@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 Categories
+
+  section
+    for category in categories
+      article
+        h3
+          a(href=category.url) #{category.name}
+
+  p
+    a(href="/category/create") Add category

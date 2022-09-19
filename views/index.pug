@@ -2,4 +2,10 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  section
+    article
+      h2 
+        a(href="/categories") Categories #{data.categoryCount}
+    article
+      h2
+        a(href="/items") Items #{data.itemCount}

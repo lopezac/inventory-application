@@ -4,4 +4,16 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    header
+      nav
+        ul
+          li #[a(href="/") Home]
+          li #[a(href="/categories") Categories]
+          li #[a(href="/items") Items]
+
+    main
+      block content
+      
+    footer
+      p Axel C. Lopez @Copyright 2022 
+        a(href="https://github.com/lopezac") GitHub

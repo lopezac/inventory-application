@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= category.name
+  if category.description
+    p= category.description
+
+  section
+    for item in items
+      article
+        h3
+          a(href=item.url) #{item.name}
+    
+  p
+    a(href="/item/create") Add item

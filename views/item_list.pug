@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 Items
+
+  section
+    for item in items
+      article
+        h3
+          a(href=item.url) #{item.name}
+  
+  p
+    a(href="/item/create") Add item

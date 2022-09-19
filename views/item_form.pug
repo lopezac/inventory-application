@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1 Create Item
+
+  form(method="POST" action="")
+    label(for="name") Name 
+    input(type="text" id="name" name="name" minlength="1" maxlength="100" required)
+    
+    label(for="description") Description 
+    input(type="text" id="description" name="description" maxlength="600")
+
+    label(for="brand") Brand 
+    input(type="text" id="brand" name="brand")
+
+    label(for="stock") Stock 
+    input(type="number" id="stock" name="stock" min=1 value=1 required)
+
+    label(for="price") Price 
+    input(type="number" id="price" name="price" min=1 value=1 required)
+
+    label(for="gamer") Gaming 
+    input(type="checkbox" id="gamer" name="gamer" checked)
+
+    button(type="submit") Create
