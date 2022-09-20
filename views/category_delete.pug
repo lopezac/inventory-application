@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 #{title} #{category.name}
+
+  if items && items.length != 0
+    p You gotta delete these items before attempting to delete this category.
+
+    ul
+      for item in items
+        li
+          a(href=item.url) #{item.name}
+
+  else
+    p Are you sure you wanna delete this category, there is no comeback
+    
+    form(method="POST" action="")
+      button(type="submit") Delete

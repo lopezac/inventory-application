@@ -1,13 +1,24 @@
 extends layout
 
 block content
-  h1 Create Category
+  h1= title
 
   form(method="POST" action="")
     label(for="name") Name 
-    input(type="text" id="name" name="name" minlength="1" maxlength="100" required)
+    input(type="text" id="name" name="name" minlength="1" maxlength="100" required
+      value=category && category.name)
     
     label(for="description") Description 
-    input(type="text" id="description" name="description" maxlength="600")
+    input(type="text" id="description" name="description" maxlength="600"
+      value=category && category.description)
 
-    button(type="submit") Create
+    //- label(for="upload_img") Image
+    //- input(type="file" id="upload_img" name="upload_img")
+    //- - console.log(file)
+
+    button(type="submit") Submit
+  
+  if errors
+    ul
+      for error in errors
+        li= error

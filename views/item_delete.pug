@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  h1 #{title} #{item.name}
+  p Are you sure you wanna delete this item, there is no comeback
+  form(method="POST" action="")
+    button(type="submit") Delete

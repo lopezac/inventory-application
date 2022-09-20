@@ -3,6 +3,7 @@ const Item = require("../models/item");
 
 const async = require("async");
 const { body, validationResult } = require("express-validator");
+const multer = require("multer");
 
 exports.index = (req, res, next) => {
   async.parallel(
@@ -52,28 +53,111 @@ exports.category_create_get = (req, res, next) => {
   res.render("category_form", { title: "Create Category" });
 };
 
+const upload = multer({ dest: "uploads/" });
+
 exports.category_create_post = [
   body("name", "Name must no be empty")
     .trim()
     .isLength({ min: 1, max: 100 })
     .escape(),
+  body("description", "Description must be no longer than 600 characters")
+    .trim()
+    .isLength({ max: 600 })
+    .escape(),
+  upload.single("upload_img"),
   (req, res, next) => {
     const errors = validationResult(req);
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("category_form", {
+        title: "Create Category",
+        category,
+        errors: errors.array(),
+        file: req.file,
+      });
+    }
+
+    category.save((err) => {
+      if (err) return next(err);
+      res.redirect(category.url);
+    });
   },
 ];
 
 exports.category_update_get = (req, res, next) => {
-  res.send("implement category update_get");
+  Category.findById(req.params.id).exec((err, category) => {
+    if (err) return next(err);
+    res.render("category_form", { title: "Update Category", category });
+  });
 };
 
-exports.category_update_post = (req, res, next) => {
-  res.send("implement category update_post");
-};
+exports.category_update_post = [
+  body("name", "Name must no be empty")
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .escape(),
+  body("description", "Description must be no longer than 600 characters")
+    .trim()
+    .isLength({ max: 600 })
+    .escape(),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    const category = new Category({
+      name: req.body.name,
+      description: req.body.description,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      res.render("category_form", {
+        title: "Update Category",
+        category,
+        errors: errors.array(),
+      });
+    }
+
+    Category.findByIdAndUpdate(req.params.id, category, {}, (err) => {
+      if (err) return next(err);
+      res.redirect(category.url);
+    });
+  },
+];
 
 exports.category_delete_get = (req, res, next) => {
-  res.send("implement category delete_get");
+  async.parallel(
+    {
+      category(callback) {
+        Category.findById(req.params.id).exec(callback);
+      },
+      items(callback) {
+        Item.find({ category: req.params.id }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) return next(err);
+      res.render("category_delete", {
+        title: "Delete Category",
+        category: results.category,
+        items: results.items,
+      });
+    }
+  );
 };
 
 exports.category_delete_post = (req, res, next) => {
-  res.send("implement category delete_post");
+  Item.find({ category: req.params.id }).exec((err, items) => {
+    if (err) return next(err);
+    if (items.length == 0) {
+      Category.findByIdAndDelete(req.params.id, (err) => {
+        if (err) return next(err);
+        return res.redirect("/categories");
+      });
+    } else {
+      res.redirect(`/category/${req.params.id}`);
+    }
+  });
 };

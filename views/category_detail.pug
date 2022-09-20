@@ -10,6 +10,12 @@ block content
       article
         h3
           a(href=item.url) #{item.name}
-    
+  
+  hr
   p
     a(href="/item/create") Add item
+  p
+    a(href=`${category.url}/update`) Update category
+  p
+    a(href=`${category.url}/delete`) Delete category
+  
