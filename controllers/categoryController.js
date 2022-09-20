@@ -77,7 +77,6 @@ exports.category_create_post = [
         title: "Create Category",
         category,
         errors: errors.array(),
-        file: req.file,
       });
     }
 

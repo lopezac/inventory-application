@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
 
-  form(method="POST" action="")
+  form(method="POST" action="" enctype="multipart/form-data")
     label(for="name") Name 
     input(type="text" id="name" name="name" minlength="1" maxlength="100" required
       value=category && category.name)
@@ -12,9 +12,8 @@ block content
     input(type="text" id="description" name="description" maxlength="600"
       value=category && category.description)
 
-    //- label(for="upload_img") Image
-    //- input(type="file" id="upload_img" name="upload_img")
-    //- - console.log(file)
+    label(for="upload_img") Image
+    input(type="file" id="upload_img" name="upload_img")
 
     button(type="submit") Submit
   
