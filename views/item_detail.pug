@@ -4,6 +4,10 @@ block content
   h1= item.name
   if item.description
     p= item.description
+  - let imgData = item.image.data && item.image.data.toString("base64");
+  - let imgType = item.image.data && item.image.fileType;
+  if imgData
+    img(src=`data:${imgType};base64,${imgData}`)
   p Category 
     a(href=item.category.url) #{item.category.name}
   if item.brand

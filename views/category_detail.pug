@@ -1,5 +1,9 @@
 extends layout
 
+mixin articleContent(item)
+  h3
+    a(href=item.url) #{item.name}
+
 block content
   h1= category.name
   if category.description
@@ -7,10 +11,19 @@ block content
 
   section
     for item in items
-      article
-        h3
-          a(href=item.url) #{item.name}
-  
+      - let imgData = item.image.data && item.image.data.toString("base64");
+      - let imgType = item.image.data && item.image.fileType;
+      if item.image.data
+        article(
+          style=`background-image: 
+            linear-gradient(to right, rgba(255,255,255, 0.3) 0 100%),
+            url(data:${imgType};base64,${imgData});`
+        )
+          +articleContent(item)
+      else
+        article
+          +articleContent(item)
+    
   hr
   p
     a(href="/item/create") Add item

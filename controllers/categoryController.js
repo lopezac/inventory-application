@@ -1,6 +1,7 @@
 const async = require("async");
 const { body, validationResult } = require("express-validator");
 const multer = require("multer");
+const basicAuth = require("express-basic-auth");
 
 const Category = require("../models/category");
 const Item = require("../models/item");
@@ -72,9 +73,9 @@ exports.category_create_post = [
       name: req.body.name,
       description: req.body.description,
       image: {
-        name: req.file.originalname,
-        fileType: req.file.mimetype,
-        data: req.file.buffer,
+        name: req.file && req.file.originalname,
+        fileType: req.file && req.file.mimetype,
+        data: req.file && req.file.buffer,
       },
     });
     console.log(req.file);
@@ -103,6 +104,10 @@ exports.category_update_get = (req, res, next) => {
 };
 
 exports.category_update_post = [
+  basicAuth({
+    users: { admin: "admin" },
+    challenge: true,
+  }),
   upload.single("upload_img"),
   body("name", "Name must no be empty")
     .trim()
@@ -119,9 +124,9 @@ exports.category_update_post = [
       description: req.body.description,
       _id: req.params.id,
       image: {
-        name: req.file.originalname,
-        fileType: req.file.mimetype,
-        data: req.file.buffer,
+        name: req.file && req.file.originalname,
+        fileType: req.file && req.file.mimetype,
+        data: req.file && req.file.buffer,
       },
     });
 
@@ -161,16 +166,22 @@ exports.category_delete_get = (req, res, next) => {
   );
 };
 
-exports.category_delete_post = (req, res, next) => {
-  Item.find({ category: req.params.id }).exec((err, items) => {
-    if (err) return next(err);
-    if (items.length == 0) {
-      Category.findByIdAndDelete(req.params.id, (err) => {
-        if (err) return next(err);
-        return res.redirect("/categories");
-      });
-    } else {
-      res.redirect(`/category/${req.params.id}`);
-    }
-  });
-};
+exports.category_delete_post = [
+  basicAuth({
+    users: { admin: "admin" },
+    challenge: true,
+  }),
+  (req, res, next) => {
+    Item.find({ category: req.params.id }).exec((err, items) => {
+      if (err) return next(err);
+      if (items.length == 0) {
+        Category.findByIdAndDelete(req.params.id, (err) => {
+          if (err) return next(err);
+          return res.redirect("/categories");
+        });
+      } else {
+        res.redirect(`/category/${req.params.id}`);
+      }
+    });
+  },
+];

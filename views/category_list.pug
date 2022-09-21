@@ -1,5 +1,9 @@
 extends layout
 
+mixin articleContent(category)
+  h3
+    a(href=category.url) #{category.name}
+
 block content
   h1 Categories
 
@@ -7,17 +11,17 @@ block content
     for category in categories
       - let imgData = category.image.data && category.image.data.toString("base64");
       - let imgType = category.image.data && category.image.fileType;
-      article(
-        style=`background-image: 
-          linear-gradient(to right, rgba(255,255,255, 0.3) 0 100%),
-          url(data:${imgType};base64,${imgData});`
-      )
-        h3
-          a(href=category.url) #{category.name}
-        //- if category.image.data 
-        //-   img(alt=category.image.name
-        //-     src=)
-        
+
+      if category.image.data
+        article(
+          style=`background-image: 
+            linear-gradient(to right, rgba(255,255,255, 0.3) 0 100%),
+            url(data:${imgType};base64,${imgData});`
+        )
+          +articleContent(category)
+      else
+        article
+          +articleContent(category)  
 
   p
     a(href="/category/create") Add category

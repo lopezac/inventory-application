@@ -1,6 +1,7 @@
 const async = require("async");
 const { body, validationResult } = require("express-validator");
 const multer = require("multer");
+const basicAuth = require("express-basic-auth");
 
 const Item = require("../models/item");
 const Category = require("../models/category");
@@ -71,9 +72,9 @@ exports.item_create_post = [
       price: req.body.price,
       gamer: req.body.gamer ? true : false,
       image: {
-        name: req.file.originalname,
-        fileType: req.file.mimetype,
-        data: req.file.buffer,
+        name: req.file && req.file.originalname,
+        fileType: req.file && req.file.mimetype,
+        data: req.file && req.file.buffer,
       },
     });
 
@@ -118,6 +119,10 @@ exports.item_update_get = (req, res, next) => {
 };
 
 exports.item_update_post = [
+  basicAuth({
+    users: { admin: "admin" },
+    challenge: true,
+  }),
   upload.single("upload_img"),
   body("name", "Name must no be empty")
     .trim()
@@ -158,9 +163,9 @@ exports.item_update_post = [
       gamer: req.body.gamer ? true : false,
       _id: req.params.id,
       image: {
-        name: req.file.originalname,
-        fileType: req.file.mimetype,
-        data: req.file.buffer,
+        name: req.file && req.file.originalname,
+        fileType: req.file && req.file.mimetype,
+        data: req.file && req.file.buffer,
       },
     });
 
@@ -190,9 +195,15 @@ exports.item_delete_get = (req, res, next) => {
   });
 };
 
-exports.item_delete_post = (req, res, next) => {
-  Item.findByIdAndDelete(req.params.id, (err) => {
-    if (err) return next(err);
-    res.redirect("/items");
-  });
-};
+exports.item_delete_post = [
+  basicAuth({
+    users: { admin: "admin" },
+    challenge: true,
+  }),
+  (req, res, next) => {
+    Item.findByIdAndDelete(req.params.id, (err) => {
+      if (err) return next(err);
+      res.redirect("/items");
+    });
+  },
+];
