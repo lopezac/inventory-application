@@ -15,8 +15,10 @@ if (!userArgs[0].startsWith('mongodb')) {
 let async = require("async");
 let Item = require("./models/item");
 let Category = require("./models/category");
+const fsp = require("fs").promises;
 
 let mongoose = require("mongoose");
+const path = require("path");
 let mongoDB = userArgs[0];
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = global.Promise;
@@ -34,6 +36,7 @@ function itemCreate(
   stock,
   category,
   gamer,
+  image,
   cb
 ) {
   let itemdetail = {
@@ -45,6 +48,7 @@ function itemCreate(
   if (brand != false) itemdetail.brand = brand;
   if (gamer != false) itemdetail.gamer = gamer;
   if (description != false) itemdetail.description = description;
+  if (image != false) itemdetail.image = image;
 
   let item = new Item(itemdetail);
   item.save(function (err) {
@@ -58,9 +62,10 @@ function itemCreate(
   });
 }
 
-function categoryCreate(name, description, cb) {
+function categoryCreate(name, description, image, cb) {
   let categorydetail = { name: name };
   if (description != false) categorydetail.description = description;
+  if (image != false) categorydetail.image = image;
 
   let category = new Category(categorydetail);
   category.save(function (err) {
@@ -72,6 +77,16 @@ function categoryCreate(name, description, cb) {
     categories.push(category);
     cb(null, category);
   });
+}
+
+let images = [];
+async function getImages() {
+  let basePath = path.join(__dirname, "public/images");
+  let files = await fsp.readdir(basePath);
+  for (let file of files) {
+    const fileData = await fsp.readFile(path.join(basePath, file));
+    images.push({ name: file, fileType: "image/jpeg", data: fileData });
+  }
 }
 
 function createItems(cb) {
@@ -86,18 +101,20 @@ function createItems(cb) {
           "1",
           categories[0],
           true,
+          images[1],
           callback
         );
       },
       function (callback) {
         itemCreate(
-          "PlayStation DualSense Wireless Controller - Midnight Black ",
+          "PlayStation DualSense Wireless Controller - Midnight Black",
           "Bring gaming worlds to life - Feel your in-game actions and environment simulated through haptic feedback*. Experience varying force and tension at your fingertips with adaptive triggers*",
           "Playstation",
           "45",
           "1",
           categories[0],
           true,
+          images[1],
           callback
         );
       },
@@ -110,6 +127,7 @@ function createItems(cb) {
           "45",
           categories[0],
           true,
+          images[2],
           callback
         );
       },
@@ -122,6 +140,7 @@ function createItems(cb) {
           "120",
           categories[1],
           false,
+          images[3],
           callback
         );
       },
@@ -134,6 +153,7 @@ function createItems(cb) {
           "25",
           categories[1],
           true,
+          images[4],
           callback
         );
       },
@@ -146,6 +166,7 @@ function createItems(cb) {
           "40",
           categories[1],
           false,
+          images[5],
           callback
         );
       },
@@ -158,6 +179,7 @@ function createItems(cb) {
           "50",
           categories[2],
           true,
+          images[6],
           callback
         );
       },
@@ -170,6 +192,7 @@ function createItems(cb) {
           "106",
           categories[2],
           false,
+          images[7],
           callback
         );
       },
@@ -182,6 +205,7 @@ function createItems(cb) {
           "199",
           categories[2],
           false,
+          images[8],
           callback
         );
       },
@@ -198,6 +222,7 @@ function createCategories(cb) {
         categoryCreate(
           "Controllers",
           "The best controllers to play for long hours, and excellent for gamers and their consoles or PC's",
+          images[1],
           callback
         );
       },
@@ -205,6 +230,7 @@ function createCategories(cb) {
         categoryCreate(
           "Keyboards",
           "The best keyboards, most sensible for your hands.",
+          images[3],
           callback
         );
       },
@@ -212,6 +238,7 @@ function createCategories(cb) {
         categoryCreate(
           "Mouses",
           "The best mouses, comfy, easy on touch and fast.",
+          images[6],
           callback
         );
       },
@@ -222,7 +249,7 @@ function createCategories(cb) {
 }
 
 async.series(
-  [createCategories, createItems],
+  [getImages, createCategories, createItems],
   // Optional callback
   function (err, results) {
     if (err) console.log("FINAL ERR: " + err);

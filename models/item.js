@@ -10,6 +10,11 @@ const ItemSchema = new Schema({
   stock: { type: Number, required: true, min: 0 },
   gamer: { type: Boolean },
   category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+  image: {
+    name: String,
+    fileType: String,
+    data: Buffer,
+  },
 });
 
 ItemSchema.virtual("url").get(function () {

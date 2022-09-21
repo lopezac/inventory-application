@@ -1,8 +1,12 @@
+const async = require("async");
+const { body, validationResult } = require("express-validator");
+const multer = require("multer");
+
 const Item = require("../models/item");
 const Category = require("../models/category");
 
-const async = require("async");
-const { body, validationResult } = require("express-validator");
+const storage = multer.memoryStorage();
+const upload = multer({ dest: "uploads/", storage: storage });
 
 exports.item_list = (req, res, next) => {
   Item.find({}).exec((err, items) => {
@@ -28,6 +32,7 @@ exports.item_create_get = (req, res, next) => {
 };
 
 exports.item_create_post = [
+  upload.single("upload_img"),
   body("name", "Name must no be empty")
     .trim()
     .isLength({ min: 1, max: 100 })
@@ -65,6 +70,11 @@ exports.item_create_post = [
       stock: req.body.stock,
       price: req.body.price,
       gamer: req.body.gamer ? true : false,
+      image: {
+        name: req.file.originalname,
+        fileType: req.file.mimetype,
+        data: req.file.buffer,
+      },
     });
 
     if (!errors.isEmpty()) {
@@ -108,6 +118,7 @@ exports.item_update_get = (req, res, next) => {
 };
 
 exports.item_update_post = [
+  upload.single("upload_img"),
   body("name", "Name must no be empty")
     .trim()
     .isLength({ min: 1, max: 100 })
@@ -146,6 +157,11 @@ exports.item_update_post = [
       price: req.body.price,
       gamer: req.body.gamer ? true : false,
       _id: req.params.id,
+      image: {
+        name: req.file.originalname,
+        fileType: req.file.mimetype,
+        data: req.file.buffer,
+      },
     });
 
     if (!errors.isEmpty()) {

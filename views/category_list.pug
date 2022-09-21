@@ -5,9 +5,19 @@ block content
 
   section
     for category in categories
-      article
+      - let imgData = category.image.data && category.image.data.toString("base64");
+      - let imgType = category.image.data && category.image.fileType;
+      article(
+        style=`background-image: 
+          linear-gradient(to right, rgba(255,255,255, 0.3) 0 100%),
+          url(data:${imgType};base64,${imgData});`
+      )
         h3
           a(href=category.url) #{category.name}
+        //- if category.image.data 
+        //-   img(alt=category.image.name
+        //-     src=)
+        
 
   p
     a(href="/category/create") Add category

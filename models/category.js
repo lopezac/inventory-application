@@ -9,6 +9,11 @@ const CategorySchema = new Schema({
     maxLength: 600,
     minLength: 0,
   },
+  image: {
+    name: String,
+    fileType: String,
+    data: Buffer,
+  },
 });
 
 CategorySchema.virtual("url").get(function () {

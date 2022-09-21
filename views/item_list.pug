@@ -5,7 +5,13 @@ block content
 
   section
     for item in items
-      article
+      - let imgData = item.image.data && item.image.data.toString("base64");
+      - let imgType = item.image.data && item.image.fileType;
+      article(
+        style=`background-image: 
+          linear-gradient(to right, rgba(255,255,255, 0.3) 0 100%),
+          url(data:${imgType};base64,${imgData});`
+      )
         h3
           a(href=item.url) #{item.name}
   

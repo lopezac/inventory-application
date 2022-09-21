@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
 
-  form(method="POST" action="")
+  form(method="POST" action="" enctype="multipart/form-data")
     label(for="name") Name 
     input(type="text" id="name" name="name" minlength="1" maxlength="100" required 
       placeholder="Keyboard Gamer 4k" value=item && item.name)
@@ -17,6 +17,9 @@ block content
       for category in categories
         - let isSelected = item && item.category.name == category.name ? "true" : false;
         option(value=category._id selected=isSelected) #{category.name}
+    
+    label(for="upload_img") Image
+    input(type="file" id="upload_img" name="upload_img")
 
     label(for="brand") Brand 
     input(type="text" id="brand" name="brand" maxlength="100" placeholder="Microsoft"
@@ -38,4 +41,4 @@ block content
   if errors
     ul
       for error in errors
-        li= error
+        li= error.msg

@@ -1,9 +1,12 @@
-const Category = require("../models/category");
-const Item = require("../models/item");
-
 const async = require("async");
 const { body, validationResult } = require("express-validator");
 const multer = require("multer");
+
+const Category = require("../models/category");
+const Item = require("../models/item");
+
+const storage = multer.memoryStorage();
+const upload = multer({ dest: "uploads/", storage: storage });
 
 exports.index = (req, res, next) => {
   async.parallel(
@@ -53,9 +56,8 @@ exports.category_create_get = (req, res, next) => {
   res.render("category_form", { title: "Create Category" });
 };
 
-const upload = multer({ dest: "uploads/" });
-
 exports.category_create_post = [
+  upload.single("upload_img"),
   body("name", "Name must no be empty")
     .trim()
     .isLength({ min: 1, max: 100 })
@@ -64,16 +66,22 @@ exports.category_create_post = [
     .trim()
     .isLength({ max: 600 })
     .escape(),
-  upload.single("upload_img"),
   (req, res, next) => {
     const errors = validationResult(req);
     const category = new Category({
       name: req.body.name,
       description: req.body.description,
+      image: {
+        name: req.file.originalname,
+        fileType: req.file.mimetype,
+        data: req.file.buffer,
+      },
     });
+    console.log(req.file);
 
     if (!errors.isEmpty()) {
-      res.render("category_form", {
+      console.log(errors.array(), req.body);
+      return res.render("category_form", {
         title: "Create Category",
         category,
         errors: errors.array(),
@@ -95,6 +103,7 @@ exports.category_update_get = (req, res, next) => {
 };
 
 exports.category_update_post = [
+  upload.single("upload_img"),
   body("name", "Name must no be empty")
     .trim()
     .isLength({ min: 1, max: 100 })
@@ -109,6 +118,11 @@ exports.category_update_post = [
       name: req.body.name,
       description: req.body.description,
       _id: req.params.id,
+      image: {
+        name: req.file.originalname,
+        fileType: req.file.mimetype,
+        data: req.file.buffer,
+      },
     });
 
     if (!errors.isEmpty()) {
