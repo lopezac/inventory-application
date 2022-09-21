@@ -1,11 +1,47 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, Noto Sans, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: var(--white);
+
+  /* Color palette */
+  --green: #22c55e;
+  --black: #18181b;
+  --white: #fafafa;
+}
+
+/* Icons */
+
+img.icon {
+  width: 32px;
+  height: 32px;
+}
+
+/* General */
+
+ul {
+  display: flex;
+  list-style-type: none;
+  column-gap: 10px;
+  padding-left: 0;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Header */
+
+header {
+  background-color: var(--black);
+}
+
+/* Main */
+
+main {
+  flex: 1;
 }
 
 form {
@@ -34,4 +70,18 @@ article::before {
 article img {
   width: 200px;
   height: 200px;
+}
+
+/* Footer */
+
+footer {
+  text-align: center;
+  background-color: var(--black);
+}
+
+footer p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
 }
