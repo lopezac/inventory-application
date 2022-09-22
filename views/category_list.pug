@@ -14,9 +14,7 @@ block content
 
       if category.image.data
         article(
-          style=`background-image: 
-            linear-gradient(to right, rgba(255,255,255, 0.3) 0 100%),
-            url(data:${imgType};base64,${imgData});`
+          styl=`background-image: url(data:${imgType};base64,${imgData});`
         )
           +articleContent(category)
       else

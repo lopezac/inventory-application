@@ -1,0 +1,6 @@
+@use "../components/container";
+
+header nav ul {
+  @extend %flex;
+  column-gap: 30px;
+}

@@ -1,0 +1,29 @@
+@use "../components/icon";
+@use "../components/button";
+@use "../components/container";
+@use "../base/variables" as *;
+
+body {
+  @extend %flex-column;
+  height: 100vh;
+  font-family: "Roboto";
+}
+
+main {
+  flex: 1;
+}
+
+h1 {
+  color: $green;
+  font-family: "Lato";
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}

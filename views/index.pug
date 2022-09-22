@@ -3,9 +3,9 @@ extends layout
 block content
   h1= title
   section
-    article
+    article(class="categories-index")
       h2 
         a(href="/categories") Categories #{data.categoryCount}
-    article
+    article(class="items-index")
       h2
         a(href="/items") Items #{data.itemCount}
