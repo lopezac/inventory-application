@@ -3,12 +3,22 @@ img.icon {
   height: 32px;
 }
 
-header nav ul, body {
+.container > section > article, footer p, header nav ul, body {
   display: flex;
 }
 
 body {
   flex-direction: column;
+}
+
+footer p, header nav ul {
+  justify-content: center;
+  align-items: center;
+}
+
+.container > section > article {
+  justify-content: center;
+  align-items: center;
 }
 
 @font-face {
@@ -31,6 +41,7 @@ main {
 h1 {
   color: #44d62c;
   font-family: "Lato";
+  text-align: center;
 }
 
 ul {
@@ -41,10 +52,74 @@ ul {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
+header {
+  background-color: black;
+  color: #7b7b7b;
+  border-bottom: 1px solid #44d62c;
+}
 header nav ul {
   column-gap: 30px;
+}
+header nav ul li {
+  padding: 15px 0;
+}
+header nav ul li a:hover {
+  color: #fafafa;
+}
+
+footer {
+  background-color: black;
+  color: #e5e5e5;
+  border-top: 1px solid #44d62c;
+}
+
+footer p {
+  column-gap: 10px;
+  margin: 8px 0;
+}
+
+body > main {
+  background-color: #171717;
+  color: white;
+}
+
+body > main > .container {
+  max-width: 900px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.container > section {
+  display: grid;
+  gap: 10px;
+  padding: 0 10px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.container > section > article {
+  position: relative;
+  height: 250px;
+  z-index: 1;
+}
+.container > section > article:nth-child(1) .opacity-div {
+  background-image: url("../../../images/controller1.jpg");
+}
+.container > section > article:nth-child(2) .opacity-div {
+  background-image: url("../../../images/mouse2.jpg");
+}
+.container > section > article .opacity-div {
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: -1;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.4;
 }
 
 /*# sourceMappingURL=style.css.map */

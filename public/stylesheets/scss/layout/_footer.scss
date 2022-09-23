@@ -1,0 +1,15 @@
+@use "../components/container";
+@use "../base/extends";
+@use "../base/variables" as *;
+
+footer {
+  background-color: black;
+  color: $lightWhite;
+  border-top: 1px solid $green;
+}
+
+footer p {
+  @extend %flex-row-center;
+  column-gap: 10px;
+  margin: 8px 0;
+}

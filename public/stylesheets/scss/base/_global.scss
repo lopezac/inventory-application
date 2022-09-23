@@ -7,6 +7,7 @@ body {
   @extend %flex-column;
   height: 100vh;
   font-family: "Roboto";
+  // overflow: hidden;
 }
 
 main {
@@ -16,6 +17,7 @@ main {
 h1 {
   color: $green;
   font-family: "Lato";
+  text-align: center;
 }
 
 ul {
@@ -26,4 +28,5 @@ ul {
 
 a {
   text-decoration: none;
+  color: inherit;
 }

@@ -1,25 +1,22 @@
 extends layout
 
-mixin articleContent(category)
-  h3
-    a(href=category.url) #{category.name}
 
 block content
   h1 Categories
 
-  section
+  section.grid-row
     for category in categories
       - let imgData = category.image.data && category.image.data.toString("base64");
       - let imgType = category.image.data && category.image.fileType;
 
-      if category.image.data
-        article(
-          styl=`background-image: url(data:${imgType};base64,${imgData});`
-        )
-          +articleContent(category)
-      else
-        article
-          +articleContent(category)  
+      article
+        if category.image.data
+          .opacity-div(
+            style=`background-image: url(data:${imgType};base64,${imgData});`
+          )
+        h3
+          a(href=category.url) #{category.name}
+
 
   p
     a(href="/category/create") Add category

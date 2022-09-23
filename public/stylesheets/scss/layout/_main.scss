@@ -1,0 +1,13 @@
+@use "../components/container";
+@use "../base/variables" as *;
+
+body > main {
+  background-color: $black;
+  color: white;
+}
+
+body > main > .container {
+  max-width: 900px;
+  margin: 0 auto;
+  height: 100%;
+}

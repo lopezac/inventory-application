@@ -1,6 +1,22 @@
 @use "../components/container";
+@use "../base/variables" as *;
+@use "../base/extends";
 
-header nav ul {
-  @extend %flex;
-  column-gap: 30px;
+header {
+  background-color: black;
+  color: $lightGray;
+  border-bottom: 1px solid $green;
+
+  nav ul {
+    @extend %flex-row-center;
+    column-gap: 30px;
+  }
+
+  nav ul li {
+    padding: 15px 0;
+  }
+
+  nav ul li a:hover {
+    color: $white;
+  }
 }
