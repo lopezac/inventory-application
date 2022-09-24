@@ -3,24 +3,6 @@ img.icon {
   height: 32px;
 }
 
-.container > section > article, footer p, header nav ul, body {
-  display: flex;
-}
-
-body {
-  flex-direction: column;
-}
-
-footer p, header nav ul {
-  justify-content: center;
-  align-items: center;
-}
-
-.container > section > article {
-  justify-content: center;
-  align-items: center;
-}
-
 @font-face {
   font-family: "Lato";
   src: url("../../../fonts/Lato-Light.ttf");
@@ -29,6 +11,38 @@ footer p, header nav ul {
   font-family: "Roboto";
   src: url("../../../fonts/Roboto-Regular.ttf");
 }
+.green-btn {
+  background-color: #44d62c;
+  color: black;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: none;
+  font-weight: bolder;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+}
+.green-btn:hover, .green-btn:focus {
+  background-color: #73e161;
+}
+
+.container > section.grid-row > article, .buttons-operators, footer p, header nav ul, body {
+  display: flex;
+}
+
+body {
+  flex-direction: column;
+}
+
+.buttons-operators, footer p, header nav ul {
+  justify-content: center;
+  align-items: center;
+}
+
+.container > section.grid-row > article {
+  justify-content: center;
+  align-items: center;
+}
+
 body {
   height: 100vh;
   font-family: "Roboto";
@@ -42,6 +56,13 @@ h1 {
   color: #44d62c;
   font-family: "Lato";
   text-align: center;
+  margin-top: 0;
+}
+
+hr {
+  border-color: #44d62c;
+  color: #44d62c;
+  margin-top: 20px;
 }
 
 ul {
@@ -92,25 +113,41 @@ body > main > .container {
   height: 100%;
 }
 
-.container > section {
+.container {
+  padding: 20px 10px 30px 10px;
+}
+.container .green-btn {
+  margin-top: 5px;
+}
+.container > p {
+  text-align: center;
+}
+
+.container > section.grid-row {
   display: grid;
   gap: 10px;
-  padding: 0 10px;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
-.container > section > article {
+.container > section.grid-row.index {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.container > section.grid-row > article {
+  padding-left: 5px;
   position: relative;
   height: 250px;
   z-index: 1;
 }
-.container > section > article:nth-child(1) .opacity-div {
+.container > section.grid-row > article:nth-child(1) .opacity-div {
   background-image: url("../../../images/controller1.jpg");
 }
-.container > section > article:nth-child(2) .opacity-div {
+.container > section.grid-row > article:nth-child(2) .opacity-div {
   background-image: url("../../../images/mouse2.jpg");
 }
-.container > section > article .opacity-div {
+.container > section.grid-row > article .opacity-div,
+.container > section.grid-row > article .opacity-div-default {
   top: 0;
   right: 0;
   left: 0;
@@ -120,6 +157,70 @@ body > main > .container {
   background-position: center;
   background-size: cover;
   opacity: 0.4;
+}
+.container > section.grid-row > article .opacity-div-default {
+  background-image: url("../../../images/no-image.png");
+}
+
+.buttons-operators {
+  column-gap: 20px;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.detail img {
+  max-width: 100%;
+  height: 480px;
+}
+
+.detail > .info {
+  color: #d4d4d4;
+}
+.detail > .info .item-price {
+  font-size: 2.2rem;
+  margin: 16px 0;
+}
+.detail > .info strong {
+  color: white;
+}
+
+@media (min-width: 900px) {
+  .detail {
+    flex-direction: row;
+  }
+  .detail img {
+    max-width: 430px;
+  }
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  background-color: #3f3f46;
+  max-width: 500px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+form input {
+  background-color: #171717;
+  border: 1px solid #7b7b7b;
+  padding: 10px;
+  color: white;
+  border-radius: 3px;
+  width: 100%;
+}
+form input:hover, form input:focus {
+  border: 1px solid #44d62c;
+}
+
+form input[type=checkbox] {
+  width: 20px;
+  height: 20px;
+  padding-top: 5px;
 }
 
 /*# sourceMappingURL=style.css.map */

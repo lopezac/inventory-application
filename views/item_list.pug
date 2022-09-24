@@ -13,12 +13,11 @@ block content
             style=`background-image: url(data:${imgType};base64,${imgData});`
           )
         else
-          .opacity-div(
-            style=`background-image: url("../public/images/not-found.jpeg");`
-          )
+          .opacity-div-default
         h3
           a(href=item.url) #{item.name}
 
-  
-  p
-    a(href="/item/create") Add item
+  hr
+  div.buttons-operators
+      button.green-btn
+        a(href="/item/create") Add item

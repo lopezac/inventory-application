@@ -1,0 +1,17 @@
+@use "../base/variables" as *;
+
+.green-btn {
+  background-color: $green;
+  color: black;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: none;
+  font-weight: bolder;
+  padding: 10px 12px;
+  font-size: 0.9rem;
+
+  &:hover,
+  &:focus {
+    background-color: $lightGreen;
+  }
+}

@@ -4,18 +4,21 @@ block content
   h1= title
 
   form(method="POST" action="" enctype="multipart/form-data")
-    label(for="name") Name 
-    input(type="text" id="name" name="name" minlength="1" maxlength="100" required
-      value=category && category.name)
-    
-    label(for="description") Description 
-    input(type="text" id="description" name="description" maxlength="600"
-      value=category && category.description)
+    div.form-group
+      label(for="name") Name 
+      input(type="text" id="name" name="name" minlength="1" maxlength="100" required
+        value=category && category.name)
 
-    label(for="upload_img") Image
-    input(type="file" id="upload_img" name="upload_img")
+    div.form-group
+      label(for="description") Description 
+      input(type="text" id="description" name="description" maxlength="600"
+        value=category && category.description)
 
-    button(type="submit") Submit
+    div.form-group
+      label(for="upload_img") Image
+      input(type="file" id="upload_img" name="upload_img")
+
+    button.green-btn(type="submit") Submit
   
   if errors
     ul

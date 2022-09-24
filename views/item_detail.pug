@@ -1,31 +1,35 @@
 extends layout
 
 block content
-  h1= item.name
-  if item.description
-    p= item.description
-  - let imgData = item.image.data && item.image.data.toString("base64");
-  - let imgType = item.image.data && item.image.fileType;
-  if imgData
-    img(src=`data:${imgType};base64,${imgData}`)
-  p Category 
-    a(href=item.category.url) #{item.category.name}
-  if item.brand
-    p Brand 
-      strong #{item.brand}
-  p Usage 
-    if item.gamer
-      strong Gaming
+  div.detail
+    - let imgData = item.image.data && item.image.data.toString("base64");
+    - let imgType = item.image.data && item.image.fileType;
+    if imgData
+      img(src=`data:${imgType};base64,${imgData}` alt=item.image.name)
     else
-      strong Office
-  p Stock 
-    strong #{item.stock}
-  p
-    strong $#{item.price}
-  
+      img(src="/images/no-image.png" alt="no image")
+    div.info
+      h1= item.name
+      if item.description
+        p= item.description
+      p.item-price
+        strong $#{item.price}
+      p Category 
+        strong: a(href=item.category.url) #{item.category.name}
+      if item.brand
+        p Brand 
+          strong #{item.brand}
+      p Usage 
+        if item.gamer
+          strong Gaming
+        else
+          strong Office
+      p Stock 
+        strong #{item.stock}
+
   hr
-  p
-    a(href=`${item.url}/update`) Update item
-  p
-    a(href=`${item.url}/delete`) Delete item
-  
+  div.buttons-operators
+      button.green-btn
+        a(href=`${item.url}/update`) Update item
+      button.green-btn
+        a(href=`${item.url}/delete`) Delete item

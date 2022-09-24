@@ -4,39 +4,47 @@ block content
   h1= title
 
   form(method="POST" action="" enctype="multipart/form-data")
-    label(for="name") Name 
-    input(type="text" id="name" name="name" minlength="1" maxlength="100" required 
-      placeholder="Keyboard Gamer 4k" value=item && item.name)
+    div.form-group
+      label(for="name") Name 
+      input(type="text" id="name" name="name" minlength="1" maxlength="100" required 
+        placeholder="Keyboard Gamer 4k" value=item && item.name)
     
-    label(for="description") Description 
-    input(type="text" id="description" name="description" maxlength="600"
-      placeholder="A delicious keyboard sensible and touchable" value=item && item.description)
+    div.form-group
+      label(for="description") Description 
+      input(type="text" id="description" name="description" maxlength="600"
+        placeholder="A delicious keyboard sensible and touchable" value=item && item.description)
 
+    div.form-group
     label(for="category-select") Category 
     select(name="category" id="category-select") 
       for category in categories
         - let isSelected = item && item.category.name == category.name ? "true" : false;
         option(value=category._id selected=isSelected) #{category.name}
-    
-    label(for="upload_img") Image
-    input(type="file" id="upload_img" name="upload_img")
 
-    label(for="brand") Brand 
-    input(type="text" id="brand" name="brand" maxlength="100" placeholder="Microsoft"
-          value=item && item.brand)
+    div.form-group
+      label(for="upload_img") Image
+      input(type="file" id="upload_img" name="upload_img")
 
-    label(for="stock") Stock 
-    input(type="number" id="stock" name="stock" min=0 placeholder=0 required
-          value=item && item.stock)
+    div.form-group
+      label(for="brand") Brand 
+      input(type="text" id="brand" name="brand" maxlength="100" placeholder="Microsoft"
+            value=item && item.brand)
 
-    label(for="price") Price 
-    input(type="number" id="price" name="price" min=1 placeholder="57" required
+    div.form-group
+      label(for="stock") Stock 
+      input(type="number" id="stock" name="stock" min=0 placeholder=0 required
+            value=item && item.stock)
+
+    div.form-group
+      label(for="price") Price 
+      input(type="number" id="price" name="price" min=1 placeholder="57" required
           value=item && item.price)
 
-    label(for="gamer") Gaming 
-    input(type="checkbox" id="gamer" name="gamer" checked=item && item.gamer)
+    div.form-group
+      label(for="gamer") Gaming 
+      input(type="checkbox" id="gamer" name="gamer" checked=item && item.gamer)
 
-    button(type="submit") Submit
+    button.green-btn(type="submit") Submit
   
   if errors
     ul

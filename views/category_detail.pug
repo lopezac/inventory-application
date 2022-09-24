@@ -5,7 +5,7 @@ block content
   if category.description
     p= category.description
 
-  section
+  section.grid-row
     for item in items
       - let imgData = item.image.data && item.image.data.toString("base64");
       - let imgType = item.image.data && item.image.fileType;
@@ -15,15 +15,18 @@ block content
           .opacity-div(
             style=`background-image: url(data:${imgType};base64,${imgData});`
           )
+        else
+          .opacity-div-default
         h3
           a(href=item.url) #{item.name}
 
     
   hr
-  p
-    a(href="/item/create") Add item
-  p
-    a(href=`${category.url}/update`) Update category
-  p
-    a(href=`${category.url}/delete`) Delete category
+  div.buttons-operators
+    button.green-btn
+      a(href="/item/create") Add item
+    button.green-btn
+      a(href=`${category.url}/update`) Update category
+    button.green-btn
+      a(href=`${category.url}/delete`) Delete category
   

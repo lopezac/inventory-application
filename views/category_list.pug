@@ -14,9 +14,12 @@ block content
           .opacity-div(
             style=`background-image: url(data:${imgType};base64,${imgData});`
           )
+        else
+          .opacity-div-default
         h3
           a(href=category.url) #{category.name}
 
-
-  p
-    a(href="/category/create") Add category
+  hr
+  div.buttons-operators
+    button.green-btn
+      a(href="/category/create") Add category
