@@ -1,7 +1,6 @@
 const async = require("async");
 const { body, validationResult } = require("express-validator");
 const multer = require("multer");
-const basicAuth = require("express-basic-auth");
 
 const Item = require("../models/item");
 const Category = require("../models/category");
@@ -119,10 +118,6 @@ exports.item_update_get = (req, res, next) => {
 };
 
 exports.item_update_post = [
-  basicAuth({
-    users: { admin: "admin" },
-    challenge: true,
-  }),
   upload.single("upload_img"),
   body("name", "Name must no be empty")
     .trim()
@@ -196,10 +191,6 @@ exports.item_delete_get = (req, res, next) => {
 };
 
 exports.item_delete_post = [
-  basicAuth({
-    users: { admin: "admin" },
-    challenge: true,
-  }),
   (req, res, next) => {
     Item.findByIdAndDelete(req.params.id, (err) => {
       if (err) return next(err);
