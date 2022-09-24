@@ -2,7 +2,7 @@
   "name": "inventory-application",
   "version": "0.0.0",
   "engines": {
-    "node": "16.15.1"
+    "node": "18.8.0"
   },
   "private": true,
   "scripts": {
@@ -12,8 +12,6 @@
     "serverStart": "DEBUG=inventory-application:* npm run devStart & npm run scss"
   },
   "dependencies": {
-    "@fontsource/lato": "^4.5.9",
-    "@fontsource/roboto": "^4.5.8",
     "async": "^3.2.4",
     "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
