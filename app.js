@@ -6,15 +6,14 @@ var logger = require("morgan");
 const mongoose = require("mongoose");
 const compression = require("compression");
 const helmet = require("helmet");
+require("dotenv").config();
 
 var indexRouter = require("./routes/index");
 
 var app = express();
 
 // Set up mongoose connection
-const dev_db_url =
-  "mongodb+srv://lopezaxel:pantaleon1@cluster0.plyaugb.mongodb.net/?retryWrites=true&w=majority";
-const mongoDB = process.env.MONGODB_URI || dev_db_url;
+const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
